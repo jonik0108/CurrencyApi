@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Currency2</string>
+    <string name="app_name">Binani</string>
+    <string name="facebook_app_id">699237817913203</string>
+    <string name="facebook_client_token">024f02844269f496fbe333a7d6b6d4f2</string>
 </resources>

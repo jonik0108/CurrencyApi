@@ -1,7 +1,10 @@
 package com.abbasov.currency2
 
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.abbasov.currency2.adapter.RvAdapter
 import com.abbasov.currency2.models.User
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         requestQueue = Volley.newRequestQueue(this)
         loadArrayList()
+
     }
     fun loadArrayList(){
         val url="http://cbu.uz/uzc/arkhiv-kursov-valyut/json/"
@@ -51,5 +55,27 @@ class MainActivity : AppCompatActivity() {
             }
         )
         requestQueue.add(jsonArrayRequest)
+    }
+
+    fun onRefresh(view: View) {
+        if (hasConnection(this)){
+            
+        }else{
+            Toast.makeText(this, "включите интернет", Toast.LENGTH_SHORT).show()
+        }
+        loadArrayList()
+    }
+    fun hasConnection(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+        if (wifiInfo != null && wifiInfo.isConnected) {
+            return true
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+        if (wifiInfo != null && wifiInfo.isConnected) {
+            return true
+        }
+        wifiInfo = cm.activeNetworkInfo
+        return wifiInfo != null && wifiInfo.isConnected
     }
 }
